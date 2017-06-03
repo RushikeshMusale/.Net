@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="Comics.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Comics"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Page.Resources>
+        <local:ComicQueryManager x:Name="comicQueryManager"/>
+        <x:String x:Key="AppName">Jimmy's comics</x:String>
+        <DataTemplate x:Key="Standard130ItmeTemplate">
+            <StackPanel Orientation="Horizontal" >
+                <Image Source="{Binding Path=Image}" Height="110" Width="110" ></Image>
+                <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                    <TextBlock Text="{Binding Path=Title}"></TextBlock>
+                    <TextBlock Text="{Binding Path=Subtitle}"></TextBlock>
+                    <TextBlock Text="{Binding Path=Description}"></TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Margin="120,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          DataContext="{StaticResource ResourceKey=comicQueryManager}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" 
+                   Text="Choose a query to run" Margin="0,-10,0,0"></TextBlock>
+        <ListView Grid.Row="1"  ItemsSource="{Binding AvailableQueries}"
+                  ItemTemplate="{StaticResource Standard130ItmeTemplate}"
+                  SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+            
+        </ListView>
+    </Grid>
+</Page>
